@@ -5,7 +5,7 @@ import { Viewer } from './components/Viewer';
 import { Toolbar } from './components/Toolbar';
 import type { FileType } from './types';
 import { JSON_SAMPLE, YAML_SAMPLE, XML_SAMPLE, CSV_SAMPLE, MARKDOWN_SAMPLE } from './data/samples';
-import { useNavigate, useLocation, Navigate, Routes, Route } from 'react-router-dom';
+import { useNavigate, useLocation, Routes, Route } from 'react-router-dom';
 
 const STORAGE_KEY = 'live-doc-viewer-content';
 
@@ -18,6 +18,8 @@ const DEFAULT_CONTENT: ContentMap = {
   csv: CSV_SAMPLE,
   markdown: MARKDOWN_SAMPLE,
 };
+
+import { Sidebar } from './components/Sidebar';
 
 function DocViewer() {
   const navigate = useNavigate();
@@ -50,43 +52,46 @@ function DocViewer() {
     }
   }, [isValidType, navigate]);
 
+  // Save to localStorage whenever content changes
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(contentMap));
+  }, [contentMap]);
+
   const code = contentMap[fileType];
 
   const setCode = (newCode: string) => {
-    setContentMap((prev) => {
-      const newMap = { ...prev, [fileType]: newCode };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newMap));
-      return newMap;
-    });
+    setContentMap(prev => ({
+      ...prev,
+      [fileType]: newCode,
+    }));
   };
 
-  const handleFileTypeChange = (newType: FileType) => {
+  const setFileType = (newType: FileType) => {
     navigate(`/${newType}`);
   };
 
   if (!isValidType) return null;
 
   return (
-    <div className="h-screen w-screen flex flex-col bg-gray-900 text-white overflow-hidden">
-      <Toolbar
-        fileType={fileType}
-        setFileType={handleFileTypeChange}
-        setCode={setCode}
-        code={code}
-      />
+    <div className="h-screen w-screen flex bg-gray-900 text-white overflow-hidden">
+      <Sidebar fileType={fileType} setFileType={setFileType} />
 
-      <div className="flex-1 overflow-hidden">
-        <PanelGroup direction="horizontal">
-          <Panel defaultSize={50} minSize={20}>
-            <Editor code={code} setCode={setCode} fileType={fileType} />
-          </Panel>
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Toolbar code={code} setCode={setCode} />
 
-          <PanelResizeHandle className="w-1 bg-gray-700 hover:bg-blue-500 transition-colors" />
+        <div className="flex-1 overflow-hidden">
+          <PanelGroup direction="horizontal">
+            <Panel defaultSize={50} minSize={20}>
+              <Editor code={code} setCode={setCode} fileType={fileType} />
+            </Panel>
 
-          <Panel defaultSize={50} minSize={20}>
-            <Viewer code={code} fileType={fileType} />
-          </Panel>
-        </PanelGroup>
+            <PanelResizeHandle className="w-1 bg-gray-700 hover:bg-blue-500 transition-colors" />
+
+            <Panel defaultSize={50} minSize={20}>
+              <Viewer code={code} fileType={fileType} />
+            </Panel>
+          </PanelGroup>
+        </div>
       </div>
     </div>
   );

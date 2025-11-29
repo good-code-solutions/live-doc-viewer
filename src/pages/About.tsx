@@ -25,11 +25,6 @@ export function About() {
                         <li><strong>Export Options:</strong> Export your documents to PDF or Image formats.</li>
                         <li><strong>Privacy First:</strong> All processing happens in your browser. No data is sent to any server.</li>
                     </ul>
-
-                    <h2 className="text-2xl font-semibold mb-4">Tech Stack</h2>
-                    <p className="text-gray-300">
-                        Built with React, TypeScript, Vite, Tailwind CSS, and Monaco Editor.
-                    </p>
                 </div>
             </div>
         </div>

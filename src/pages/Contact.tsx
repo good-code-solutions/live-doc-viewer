@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Mail, Github, Twitter } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 export function Contact() {
     return (
@@ -16,37 +16,60 @@ export function Contact() {
                     Have questions, suggestions, or found a bug? We'd love to hear from you!
                 </p>
 
-                <div className="grid gap-6">
-                    <a href="mailto:support@livedoc.com" className="flex items-center gap-4 p-6 bg-gray-800 rounded-lg hover:bg-gray-750 transition-colors border border-gray-700">
-                        <div className="p-3 bg-blue-500/10 rounded-full text-blue-400">
-                            <Mail size={24} />
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-lg">Email Support</h3>
-                            <p className="text-gray-400">support@livedoc.com</p>
-                        </div>
-                    </a>
+                <form
+                    name="contact"
+                    method="POST"
+                    data-netlify="true"
+                    className="space-y-6"
+                >
+                    <input type="hidden" name="form-name" value="contact" />
 
-                    <a href="https://github.com/good-code-solutions/live-doc-viewer" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-6 bg-gray-800 rounded-lg hover:bg-gray-750 transition-colors border border-gray-700">
-                        <div className="p-3 bg-gray-700 rounded-full text-white">
-                            <Github size={24} />
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-lg">GitHub</h3>
-                            <p className="text-gray-400">Report issues and contribute</p>
-                        </div>
-                    </a>
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium mb-2">
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                            className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 text-white"
+                        />
+                    </div>
 
-                    <a href="https://twitter.com/livedoc" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-6 bg-gray-800 rounded-lg hover:bg-gray-750 transition-colors border border-gray-700">
-                        <div className="p-3 bg-blue-400/10 rounded-full text-blue-400">
-                            <Twitter size={24} />
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-lg">Twitter</h3>
-                            <p className="text-gray-400">Follow us for updates</p>
-                        </div>
-                    </a>
-                </div>
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium mb-2">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 text-white"
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="message" className="block text-sm font-medium mb-2">
+                            Message
+                        </label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows={6}
+                            required
+                            className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 text-white resize-none"
+                        ></textarea>
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="w-full px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors"
+                    >
+                        Send Message
+                    </button>
+                </form>
             </div>
         </div>
     );
