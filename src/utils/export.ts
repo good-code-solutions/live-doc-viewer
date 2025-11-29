@@ -5,19 +5,34 @@ import hljs from 'highlight.js';
 
 // Configure marked for GitHub-style rendering
 marked.setOptions({
-    highlight: function (code, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-            try {
-                return hljs.highlight(code, { language: lang }).value;
-            } catch (err) {
-                console.error('Highlight error:', err);
-            }
-        }
-        return code;
-    },
     breaks: true,
     gfm: true,
 });
+
+// Set up the renderer for syntax highlighting
+const renderer = new marked.Renderer();
+
+renderer.code = function({ text, lang, escaped }) {
+    if (lang && hljs.getLanguage(lang)) {
+        try {
+            const highlighted = hljs.highlight(text, { language: lang }).value;
+            return `<pre><code class="hljs language-${lang}">${highlighted}</code></pre>`;
+        } catch (err) {
+            console.error('Highlight error:', err);
+        }
+    }
+    const escapedText = escaped ? text : text.replace(/[&<>"']/g, (match) => {
+        const escapeMap: Record<string, string> = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        };
+        return escapeMap[match];
+    });
+    return `<pre><code>${escapedText}</code></pre>`;
+};
 
 // GitHub-style CSS for PDF (based on vscode-md-to-pdf)
 const GITHUB_PDF_STYLES = `
@@ -166,8 +181,10 @@ async function exportMarkdownToPdf() {
     }
 
     // Get the Monaco editor instance
-    const editor = (window as any).monaco?.editor?.getModels()?.[0];
-    const markdownContent = editor?.getValue() || '';
+    const monacoWindow = window as { monaco?: { editor?: { getModels?: () => Array<{ getValue?: () => string }> } } };
+    const models = monacoWindow.monaco?.editor?.getModels?.();
+    const editor = models?.[0];
+    const markdownContent = editor?.getValue?.() || '';
 
     if (!markdownContent) {
         console.error('No markdown content found');
@@ -176,7 +193,7 @@ async function exportMarkdownToPdf() {
 
     try {
         // Convert markdown to HTML
-        const htmlContent = marked(markdownContent);
+        const htmlContent = marked(markdownContent, { renderer });
 
         // Create a temporary container
         const tempContainer = document.createElement('div');

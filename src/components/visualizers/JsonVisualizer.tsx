@@ -1,7 +1,7 @@
 import ReactJson from 'react-json-view';
 
 interface JsonVisualizerProps {
-    data: any;
+    data: object;
 }
 
 export function JsonVisualizer({ data }: JsonVisualizerProps) {

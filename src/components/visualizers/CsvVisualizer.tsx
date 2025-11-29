@@ -17,7 +17,7 @@ export function CsvVisualizer({ code }: CsvVisualizerProps) {
         return <div className="p-4 text-gray-400">No data to display</div>;
     }
 
-    const headers = meta.fields || Object.keys(data[0] as any);
+    const headers = meta.fields || Object.keys(data[0] as Record<string, unknown>);
 
     return (
         <div className="h-full w-full overflow-auto bg-gray-900 p-4">
@@ -32,11 +32,11 @@ export function CsvVisualizer({ code }: CsvVisualizerProps) {
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-700">
-                    {data.map((row: any, index) => (
+                    {(data as Record<string, unknown>[]).map((row, index) => (
                         <tr key={index} className="hover:bg-gray-800/50">
                             {headers.map((header) => (
                                 <td key={`${index}-${header}`} className="px-6 py-4 whitespace-nowrap">
-                                    {row[header]}
+                                    {String(row[header] ?? '')}
                                 </td>
                             ))}
                         </tr>

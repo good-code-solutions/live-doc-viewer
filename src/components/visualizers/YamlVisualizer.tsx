@@ -15,5 +15,5 @@ export function YamlVisualizer({ code }: YamlVisualizerProps) {
         }
     }, [code]);
 
-    return <JsonVisualizer data={data} />;
+    return <JsonVisualizer data={data as object} />;
 }
