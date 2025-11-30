@@ -1,13 +1,22 @@
 import { useState, useEffect, useRef } from 'react';
-import { Upload, Download, FileText, Image as ImageIcon, Wand2 } from 'lucide-react';
+import { Upload, Download, FileText, Image as ImageIcon, Wand2, ChevronDown, ChevronRight, Palette } from 'lucide-react';
 import { exportToPdf, exportToImage } from '../utils/export';
+import yaml from 'js-yaml';
+import { XMLParser, XMLBuilder } from 'fast-xml-parser';
+import type { FileType } from '../types';
 
 interface ToolbarProps {
     setCode: (code: string) => void;
     code: string;
+    fileType: FileType;
+    treeCollapsed: boolean | number;
+    setTreeCollapsed: (collapsed: boolean | number) => void;
+    treeTheme: 'monokai' | 'ocean' | 'rjv-default';
+    setTreeTheme: (theme: 'monokai' | 'ocean' | 'rjv-default') => void;
+    setTreeForceUpdate: (updater: (prev: number) => number) => void;
 }
 
-export function Toolbar({ setCode, code }: ToolbarProps) {
+export function Toolbar({ setCode, code, fileType, setTreeCollapsed, treeTheme, setTreeTheme, setTreeForceUpdate }: ToolbarProps) {
     const [showExportMenu, setShowExportMenu] = useState(false);
     const exportMenuRef = useRef<HTMLDivElement>(null);
 
@@ -28,22 +37,43 @@ export function Toolbar({ setCode, code }: ToolbarProps) {
         if (type === 'pdf') {
             exportToPdf();
         } else {
-            exportToImage('viewer-container', `export -${Date.now()} `);
+            exportToImage('viewer-container', `export-${Date.now()}`);
         }
         setShowExportMenu(false);
     };
 
     const handleFormat = () => {
         try {
-            // Try to detect and format JSON
-            const trimmed = code.trim();
-            if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+            if (fileType === 'json') {
                 const formatted = JSON.stringify(JSON.parse(code), null, 2);
+                setCode(formatted);
+            } else if (fileType === 'yaml') {
+                const parsed = yaml.load(code);
+                const formatted = yaml.dump(parsed);
+                setCode(formatted);
+            } else if (fileType === 'xml') {
+                const parser = new XMLParser({
+                    ignoreAttributes: false,
+                    parseAttributeValue: true
+                });
+                const parsed = parser.parse(code);
+
+                const builder = new XMLBuilder({
+                    ignoreAttributes: false,
+                    format: true,
+                    indentBy: '  '
+                });
+                const formatted = builder.build(parsed);
                 setCode(formatted);
             }
         } catch (e) {
             console.error('Format error:', e);
         }
+    };
+
+    const handleExpandCollapse = (isCollapsed: boolean) => {
+        setTreeCollapsed(isCollapsed);
+        setTreeForceUpdate(prev => prev + 1);
     };
 
     return (
@@ -56,14 +86,50 @@ export function Toolbar({ setCode, code }: ToolbarProps) {
             </div>
 
             <div className="flex items-center gap-2">
-                <button
-                    onClick={handleFormat}
-                    className="flex items-center gap-2 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-white text-sm rounded border border-gray-700 transition-colors"
-                    title="Format Document"
-                >
-                    <Wand2 size={16} />
-                    <span>Prettify</span>
-                </button>
+                {['json', 'yaml', 'xml'].includes(fileType) && (
+                    <button
+                        onClick={handleFormat}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-white text-sm rounded border border-gray-700 transition-colors"
+                        title="Format Document"
+                    >
+                        <Wand2 size={16} />
+                        <span>Prettify</span>
+                    </button>
+                )}
+
+                {['json', 'yaml', 'xml'].includes(fileType) && (
+                    <>
+                        <div className="h-6 w-px bg-gray-600"></div>
+                        <button
+                            onClick={() => handleExpandCollapse(false)}
+                            className="flex items-center gap-2 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-white text-sm rounded border border-gray-700 transition-colors"
+                        >
+                            <ChevronDown size={16} />
+                            <span>Expand All</span>
+                        </button>
+                        <button
+                            onClick={() => handleExpandCollapse(true)}
+                            className="flex items-center gap-2 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-white text-sm rounded border border-gray-700 transition-colors"
+                        >
+                            <ChevronRight size={16} />
+                            <span>Collapse All</span>
+                        </button>
+                        <div className="flex items-center gap-2">
+                            <Palette size={16} className="text-gray-400" />
+                            <select
+                                value={treeTheme}
+                                onChange={(e) => setTreeTheme(e.target.value as 'monokai' | 'ocean' | 'rjv-default')}
+                                className="bg-gray-800 text-white text-sm px-3 py-1.5 rounded border border-gray-700 focus:ring-1 focus:ring-blue-500 outline-none cursor-pointer"
+                            >
+                                <option value="monokai">monokai</option>
+                                <option value="ocean">ocean</option>
+                                <option value="rjv-default">light</option>
+                            </select>
+                        </div>
+                    </>
+                )}
+
+                <div className="h-6 w-px bg-gray-600"></div>
 
                 <label className="flex items-center gap-2 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-white text-sm rounded border border-gray-700 transition-colors cursor-pointer">
                     <Upload size={16} />

@@ -45,6 +45,19 @@ function DocViewer() {
     return DEFAULT_CONTENT;
   });
 
+  // Tree Visualizer state (for JSON, YAML, XML)
+  const [treeCollapsed, setTreeCollapsed] = useState<boolean | number>(2);
+  const [treeTheme, setTreeTheme] = useState<'monokai' | 'ocean' | 'rjv-default'>(() => {
+    const saved = localStorage.getItem('tree-theme');
+    return (saved as 'monokai' | 'ocean' | 'rjv-default') || 'monokai';
+  });
+  const [treeForceUpdate, setTreeForceUpdate] = useState(0);
+
+  // Save tree theme to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('tree-theme', treeTheme);
+  }, [treeTheme]);
+
   // Redirect if invalid type or root
   useEffect(() => {
     if (!isValidType) {
@@ -77,7 +90,16 @@ function DocViewer() {
       <Sidebar fileType={fileType} setFileType={setFileType} />
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <Toolbar code={code} setCode={setCode} />
+        <Toolbar
+          code={code}
+          setCode={setCode}
+          fileType={fileType}
+          treeCollapsed={treeCollapsed}
+          setTreeCollapsed={setTreeCollapsed}
+          treeTheme={treeTheme}
+          setTreeTheme={setTreeTheme}
+          setTreeForceUpdate={setTreeForceUpdate}
+        />
 
         <div className="flex-1 overflow-hidden">
           <PanelGroup direction="horizontal">
@@ -88,7 +110,13 @@ function DocViewer() {
             <PanelResizeHandle className="w-1 bg-gray-700 hover:bg-blue-500 transition-colors" />
 
             <Panel defaultSize={50} minSize={20}>
-              <Viewer code={code} fileType={fileType} />
+              <Viewer
+                code={code}
+                fileType={fileType}
+                treeCollapsed={treeCollapsed}
+                treeTheme={treeTheme}
+                treeForceUpdate={treeForceUpdate}
+              />
             </Panel>
           </PanelGroup>
         </div>

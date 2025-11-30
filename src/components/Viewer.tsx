@@ -8,15 +8,23 @@ import { MarkdownVisualizer } from './visualizers/MarkdownVisualizer';
 interface ViewerProps {
     code: string;
     fileType: FileType;
+    treeCollapsed?: boolean | number;
+    treeTheme?: 'monokai' | 'ocean' | 'rjv-default';
+    treeForceUpdate?: number;
 }
 
-export function Viewer({ code, fileType }: ViewerProps) {
+export function Viewer({ code, fileType, treeCollapsed, treeTheme, treeForceUpdate }: ViewerProps) {
     const renderVisualizer = () => {
         switch (fileType) {
             case 'json':
                 try {
                     const data = JSON.parse(code);
-                    return <JsonVisualizer data={data} />;
+                    return <JsonVisualizer
+                        data={data}
+                        collapsed={treeCollapsed}
+                        theme={treeTheme}
+                        forceUpdate={treeForceUpdate}
+                    />;
                 } catch (e) {
                     const error = e as Error;
                     const errorMessage = error.message;
@@ -52,9 +60,19 @@ export function Viewer({ code, fileType }: ViewerProps) {
                     );
                 }
             case 'yaml':
-                return <YamlVisualizer code={code} />;
+                return <YamlVisualizer
+                    code={code}
+                    collapsed={treeCollapsed}
+                    theme={treeTheme}
+                    forceUpdate={treeForceUpdate}
+                />;
             case 'xml':
-                return <XmlVisualizer code={code} />;
+                return <XmlVisualizer
+                    code={code}
+                    collapsed={treeCollapsed}
+                    theme={treeTheme}
+                    forceUpdate={treeForceUpdate}
+                />;
             case 'csv':
                 return <CsvVisualizer code={code} />;
             case 'markdown':

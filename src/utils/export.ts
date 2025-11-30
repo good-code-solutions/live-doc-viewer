@@ -12,7 +12,7 @@ marked.setOptions({
 // Set up the renderer for syntax highlighting
 const renderer = new marked.Renderer();
 
-renderer.code = function({ text, lang, escaped }) {
+renderer.code = function ({ text, lang, escaped }) {
     if (lang && hljs.getLanguage(lang)) {
         try {
             const highlighted = hljs.highlight(text, { language: lang }).value;
@@ -292,6 +292,11 @@ async function exportMarkdownToPdf() {
     }
 }
 
+// Helper to ignore elements during export
+const ignoreElements = (element: Element) => {
+    return element.classList.contains('no-export');
+};
+
 // Viewer-based PDF export for other formats (JSON, YAML, XML, CSV)
 async function exportViewerToPdf() {
     console.log('📄 Using viewer-based PDF export');
@@ -315,6 +320,7 @@ async function exportViewerToPdf() {
             backgroundColor: '#1f2937',
             windowWidth: element.scrollWidth,
             windowHeight: element.scrollHeight,
+            ignoreElements: ignoreElements,
         });
 
         // Restore original styles
@@ -375,6 +381,7 @@ export async function exportToImage(elementId: string, fileName: string) {
         const canvas = await html2canvas(element, {
             scale: 2,
             backgroundColor: '#1e1e1e',
+            ignoreElements: ignoreElements,
         });
 
         const link = document.createElement('a');

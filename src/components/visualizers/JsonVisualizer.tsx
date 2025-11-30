@@ -1,19 +1,25 @@
-import ReactJson from 'react-json-view';
+import ReactJson, { type ThemeKeys } from 'react-json-view';
 
 interface JsonVisualizerProps {
     data: object;
+    collapsed?: boolean | number;
+    theme?: ThemeKeys;
+    forceUpdate?: number;
 }
 
-export function JsonVisualizer({ data }: JsonVisualizerProps) {
+export function JsonVisualizer({ data, collapsed = 2, theme = 'monokai', forceUpdate = 0 }: JsonVisualizerProps) {
+    const isLightTheme = ['rjv-default'].includes(theme);
+    const bgColor = isLightTheme ? 'bg-white' : 'bg-[#1e1e1e]';
+
     return (
-        <div className="h-full w-full overflow-auto p-4 bg-[#1e1e1e]">
+        <div className={`h-full w-full overflow-auto p-4 ${bgColor}`}>
             <ReactJson
+                key={forceUpdate}
                 src={data}
-                theme="monokai"
-                style={{ backgroundColor: 'transparent' }}
+                theme={theme}
                 displayDataTypes={false}
                 enableClipboard={true}
-                collapsed={2}
+                collapsed={collapsed}
             />
         </div>
     );
