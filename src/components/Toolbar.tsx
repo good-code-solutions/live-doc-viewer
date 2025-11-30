@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Upload, Download, FileText, Image as ImageIcon, Wand2, ChevronDown, ChevronRight, Palette } from 'lucide-react';
+import { Upload, Download, FileText, Image as ImageIcon, Wand2, ChevronDown, ChevronRight } from 'lucide-react';
 import { exportToPdf, exportToImage } from '../utils/export';
 import yaml from 'js-yaml';
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
@@ -11,12 +11,10 @@ interface ToolbarProps {
     fileType: FileType;
     treeCollapsed: boolean | number;
     setTreeCollapsed: (collapsed: boolean | number) => void;
-    treeTheme: 'monokai' | 'ocean' | 'rjv-default';
-    setTreeTheme: (theme: 'monokai' | 'ocean' | 'rjv-default') => void;
     setTreeForceUpdate: (updater: (prev: number) => number) => void;
 }
 
-export function Toolbar({ setCode, code, fileType, setTreeCollapsed, treeTheme, setTreeTheme, setTreeForceUpdate }: ToolbarProps) {
+export function Toolbar({ setCode, code, fileType, setTreeCollapsed, setTreeForceUpdate }: ToolbarProps) {
     const [showExportMenu, setShowExportMenu] = useState(false);
     const exportMenuRef = useRef<HTMLDivElement>(null);
 
@@ -114,18 +112,6 @@ export function Toolbar({ setCode, code, fileType, setTreeCollapsed, treeTheme, 
                             <ChevronRight size={16} />
                             <span>Collapse All</span>
                         </button>
-                        <div className="flex items-center gap-2">
-                            <Palette size={16} className="text-gray-400" />
-                            <select
-                                value={treeTheme}
-                                onChange={(e) => setTreeTheme(e.target.value as 'monokai' | 'ocean' | 'rjv-default')}
-                                className="bg-gray-800 text-white text-sm px-3 py-1.5 rounded border border-gray-700 focus:ring-1 focus:ring-blue-500 outline-none cursor-pointer"
-                            >
-                                <option value="monokai">monokai</option>
-                                <option value="ocean">ocean</option>
-                                <option value="rjv-default">light</option>
-                            </select>
-                        </div>
                     </>
                 )}
 

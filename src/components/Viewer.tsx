@@ -9,11 +9,10 @@ interface ViewerProps {
     code: string;
     fileType: FileType;
     treeCollapsed?: boolean | number;
-    treeTheme?: 'monokai' | 'ocean' | 'rjv-default';
     treeForceUpdate?: number;
 }
 
-export function Viewer({ code, fileType, treeCollapsed, treeTheme, treeForceUpdate }: ViewerProps) {
+export function Viewer({ code, fileType, treeCollapsed, treeForceUpdate }: ViewerProps) {
     const renderVisualizer = () => {
         switch (fileType) {
             case 'json':
@@ -22,7 +21,6 @@ export function Viewer({ code, fileType, treeCollapsed, treeTheme, treeForceUpda
                     return <JsonVisualizer
                         data={data}
                         collapsed={treeCollapsed}
-                        theme={treeTheme}
                         forceUpdate={treeForceUpdate}
                     />;
                 } catch (e) {
@@ -63,14 +61,12 @@ export function Viewer({ code, fileType, treeCollapsed, treeTheme, treeForceUpda
                 return <YamlVisualizer
                     code={code}
                     collapsed={treeCollapsed}
-                    theme={treeTheme}
                     forceUpdate={treeForceUpdate}
                 />;
             case 'xml':
                 return <XmlVisualizer
                     code={code}
                     collapsed={treeCollapsed}
-                    theme={treeTheme}
                     forceUpdate={treeForceUpdate}
                 />;
             case 'csv':
