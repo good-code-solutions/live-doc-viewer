@@ -1,135 +1,184 @@
 export const JSON_SAMPLE = `{
-  "project": "Live Document Viewer",
+  "project": "JsonFormatStudio",
   "version": "1.0.0",
+  "description": "Professional JSON Editor & Data Format Viewer",
   "features": [
-    "Multi-format support",
-    "Live editing",
+    "JSON Editor & Validator",
+    "YAML Parser & Viewer", 
+    "XML Parser & Formatter",
+    "CSV Data Viewer",
+    "Markdown Renderer",
+    "Syntax Highlighting",
+    "Tree View Visualization",
     "Export to PDF/Image",
-    "Local storage persistence"
+    "Privacy-First Design"
   ],
   "settings": {
     "theme": "dark",
     "fontSize": 14,
-    "autoSave": true
+    "autoSave": true,
+    "treeView": true,
+    "syntaxHighlighting": true
   },
-  "contributors": [
+  "developers": [
     {
-      "name": "Alice",
-      "role": "Frontend"
-    },
-    {
-      "name": "Bob",
-      "role": "Design"
+      "name": "JsonFormatStudio Team",
+      "role": "Full-Stack Development",
+      "focus": "Developer Tools"
     }
+  ],
+  "keywords": [
+    "json editor",
+    "yaml viewer", 
+    "xml parser",
+    "csv formatter",
+    "developer tools"
   ]
 }`;
 
-export const YAML_SAMPLE = `name: Live Document Viewer
+export const YAML_SAMPLE = `name: JsonFormatStudio
 version: 1.0.0
-description: A super pretty live document viewer and editor.
+description: Professional JSON Editor, YAML Viewer, XML Parser & CSV Formatter
+keywords:
+  - json editor
+  - yaml viewer
+  - xml parser
+  - csv formatter
+  - developer tools
 dependencies:
-  react: ^18.2.0
-  vite: ^5.0.0
-  tailwindcss: ^3.4.0
+  react: ^19.2.0
+  monaco-editor: ^4.7.0
+  tailwindcss: ^3.4.17
+  vite: ^7.2.4
+features:
+  - JSON Editor with validation
+  - YAML parsing and formatting
+  - XML structure visualization
+  - CSV data tables
+  - Markdown rendering
+  - Export capabilities
 scripts:
   dev: vite
-  build: tsc && vite build
+  build: tsc -b && vite build
+  lint: eslint .
 environment:
   NODE_ENV: development
-  PORT: 3000
+  PORT: 5173
 `;
 
 export const XML_SAMPLE = `<?xml version="1.0" encoding="UTF-8"?>
-<library>
-  <book id="1">
-    <title>The Pragmatic Programmer</title>
-    <author>Andrew Hunt</author>
-    <author>David Thomas</author>
-    <year>1999</year>
-    <category>Programming</category>
-  </book>
-  <book id="2">
-    <title>Clean Code</title>
-    <author>Robert C. Martin</author>
-    <year>2008</year>
-    <category>Software Engineering</category>
-  </book>
-  <book id="3">
-    <title>Design Patterns</title>
-    <author>Erich Gamma</author>
-    <author>Richard Helm</author>
-    <author>Ralph Johnson</author>
-    <author>John Vlissides</author>
-    <year>1994</year>
-    <category>Computer Science</category>
-  </book>
-</library>`;
+<jsonFormatStudio>
+  <project>
+    <name>JsonFormatStudio</name>
+    <version>1.0.0</version>
+    <description>Professional Data Format Tools</description>
+  </project>
+  <tools>
+    <tool id="json">
+      <name>JSON Editor & Validator</name>
+      <features>
+        <feature>Syntax highlighting</feature>
+        <feature>Tree view visualization</feature>
+        <feature>Real-time validation</feature>
+      </features>
+      <category>Data Editing</category>
+    </tool>
+    <tool id="yaml">
+      <name>YAML Parser & Viewer</name>
+      <features>
+        <feature>Format validation</feature>
+        <feature>Error detection</feature>
+      </features>
+      <category>Configuration</category>
+    </tool>
+    <tool id="xml">
+      <name>XML Parser & Formatter</name>
+      <features>
+        <feature>Structure visualization</feature>
+        <feature>Pretty printing</feature>
+      </features>
+      <category>Markup Language</category>
+    </tool>
+  </tools>
+  <keywords>json editor, yaml viewer, xml parser, csv formatter, developer tools</keywords>
+</jsonFormatStudio>`;
 
-export const CSV_SAMPLE = `id,name,role,department,status
-1,John Doe,Developer,Engineering,Active
-2,Jane Smith,Designer,Product,Active
-3,Bob Johnson,Manager,Sales,On Leave
-4,Alice Williams,Developer,Engineering,Active
-5,Charlie Brown,Analyst,Marketing,Inactive
-6,Diana Prince,Director,Operations,Active
+export const CSV_SAMPLE = `tool,name,category,features,developer_friendly
+JSON,JSON Editor & Validator,Data Editing,"Syntax highlighting, Tree view, Validation",Yes
+YAML,YAML Parser & Viewer,Configuration,"Format validation, Error detection",Yes
+XML,XML Parser & Formatter,Markup Language,"Structure visualization, Pretty printing",Yes
+CSV,CSV Data Viewer,Data Analysis,"Table view, Export options",Yes
+Markdown,Markdown Renderer,Documentation,"Live preview, GitHub-flavored support",Yes
+JsonFormatStudio,Professional Data Format Tools,Developer Tools,"Multi-format support, Privacy-first",Yes
 `;
 
-export const MARKDOWN_SAMPLE = `# Live Document Viewer
+export const MARKDOWN_SAMPLE = `# JsonFormatStudio
 
-Welcome to the **Live Document Viewer**! This is a sample Markdown file to demonstrate the capabilities of the viewer.
+Welcome to **JsonFormatStudio** - the professional data format editor and visualization tool for developers! This markdown demonstrates our advanced rendering capabilities.
 
-## Features
+## Professional Data Format Tools
 
-- **Bold** and *Italic* text support
-- [Links](https://github.com)
-- \`Inline Code\`
-- Blockquotes
+- **JSON Editor & Validator** with syntax highlighting
+- **YAML Parser & Viewer** with real-time validation  
+- **XML Parser & Formatter** with structure visualization
+- **CSV Data Viewer** with table formatting
+- [JsonFormatStudio](https://jsonformatstudio.com) - Professional developer tools
+- \`Inline code\` highlighting and formatting
 
-> "Code is like humor. When you have to explain it, it’s bad." – Cory House
+> "The best tools are invisible - they just work." – JsonFormatStudio Team
 
-## Code Blocks
+## Code Examples
 
 \`\`\`javascript
-function greet(name) {
-  console.log(\`Hello, \${name}!\`);
+// JSON validation example
+function validateJson(data) {
+  try {
+    JSON.parse(data);
+    return { valid: true, message: "Valid JSON" };
+  } catch (error) {
+    return { valid: false, message: error.message };
+  }
 }
 
-greet('World');
+console.log(validateJson('{"project": "JsonFormatStudio"}'));
 \`\`\`
 
-## Tables
+## Feature Comparison
 
-| Feature | Status | Priority |
-| :--- | :---: | ---: |
-| JSON Support | ✅ | High |
-| YAML Support | ✅ | High |
-| XML Support | ✅ | Medium |
-| CSV Support | ✅ | Medium |
-| Markdown | ✅ | High |
+| Tool | Format | Validation | Tree View | Export |
+| :--- | :---: | :---: | :---: | ---: |
+| JSON Editor | ✅ | ✅ | ✅ | ✅ |
+| YAML Viewer | ✅ | ✅ | ✅ | ✅ |
+| XML Parser | ✅ | ✅ | ✅ | ✅ |
+| CSV Formatter | ✅ | ✅ | 📊 | ✅ |
+| Markdown Renderer | ✅ | ✅ | 📝 | ✅ |
 
-## Lists
+## Development Roadmap
 
-1. First item
-2. Second item
-   - Subitem A
-   - Subitem B
-3. Third item
+1. **Core Features** ✅
+   - Multi-format support
+   - Real-time validation
+   - Syntax highlighting
+2. **Advanced Features** ✅
+   - Tree view visualization
+   - Export capabilities  
+   - Privacy-first design
+3. **Future Enhancements**
+   - [ ] Plugin system
+   - [ ] Collaborative editing
+   - [ ] Advanced themes
 
-## Task List
-
-- [x] Create Project
-- [x] Implement UI
-- [ ] Add Persistence
-- [ ] Deploy
-
-## ASCII Art
+## JsonFormatStudio Logo
 
 \`\`\`
-      /\\
-     /  \\
-    /____\\
-   /\\    /\\
-  /  \\  /  \\
- /____\\/____\\
+     ██╗███████╗ ██████╗ ███╗   ██╗
+     ██║██╔════╝██╔═══██╗████╗  ██║
+     ██║███████╗██║   ██║██╔██╗ ██║
+██   ██║╚════██║██║   ██║██║╚██╗██║
+╚█████╔╝███████║╚██████╔╝██║ ╚████║
+ ╚════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝
+    Professional Data Format Tools
 \`\`\`
+
+**Built for developers, by developers.** 🚀
 `;

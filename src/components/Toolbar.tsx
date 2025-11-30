@@ -79,7 +79,7 @@ export function Toolbar({ setCode, code, fileType, setTreeCollapsed, setTreeForc
             <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2 text-blue-400 font-bold text-lg">
                     <FileText size={24} />
-                    <span>LiveDoc</span>
+                    <span>JsonFormatStudio</span>
                 </div>
             </div>
 

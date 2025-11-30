@@ -1,8 +1,12 @@
 {
-  "name": "live-doc-viewer",
+  "name": "jsonformatstudio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Professional JSON Editor, YAML Viewer, XML Parser & CSV Formatter - Multi-format data structure visualization tool for developers",
+  "keywords": ["json editor", "yaml viewer", "xml parser", "csv formatter", "data visualization", "json formatter", "json validator", "developer tools", "code editor"],
+  "author": "JsonFormatStudio",
+  "homepage": "https://jsonformatstudio.com",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -7,7 +7,7 @@ import type { FileType } from './types';
 import { JSON_SAMPLE, YAML_SAMPLE, XML_SAMPLE, CSV_SAMPLE, MARKDOWN_SAMPLE } from './data/samples';
 import { useNavigate, useLocation, Routes, Route } from 'react-router-dom';
 
-const STORAGE_KEY = 'live-doc-viewer-content';
+const STORAGE_KEY = 'jsonformatstudio-content';
 
 type ContentMap = Record<FileType, string>;
 
@@ -30,6 +30,31 @@ function DocViewer() {
   const isValidType = ['json', 'yaml', 'xml', 'csv', 'markdown'].includes(pathType);
 
   const fileType = isValidType ? pathType : 'json';
+
+  // Update page title based on current format
+  useEffect(() => {
+    const formatTitles: Record<FileType, string> = {
+      json: 'JSON Editor - JsonFormatStudio | Format, Validate & Visualize JSON Data',
+      yaml: 'YAML Viewer - JsonFormatStudio | Parse & Format YAML Documents',
+      xml: 'XML Parser - JsonFormatStudio | Format & Validate XML Data',
+      csv: 'CSV Formatter - JsonFormatStudio | View & Format CSV Data Tables',
+      markdown: 'Markdown Renderer - JsonFormatStudio | Preview & Format Markdown'
+    };
+    
+    const formatDescriptions: Record<FileType, string> = {
+      json: 'Professional online JSON editor with validation, formatting, and tree view. Format, validate and visualize JSON data instantly with syntax highlighting.',
+      yaml: 'Online YAML viewer and parser. Format, validate and visualize YAML documents with syntax highlighting and error detection.',
+      xml: 'Professional XML parser and formatter. Validate, format and visualize XML data with syntax highlighting and structure validation.',
+      csv: 'CSV data viewer and formatter. View, format and analyze CSV data in organized tables with export capabilities.',
+      markdown: 'Markdown renderer with GitHub-flavored markdown support. Preview and format Markdown documents with live rendering.'
+    };
+    
+    document.title = formatTitles[fileType];
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', formatDescriptions[fileType]);
+    }
+  }, [fileType]);
 
   const [contentMap, setContentMap] = useState<ContentMap>(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
