@@ -182,3 +182,36 @@ console.log(validateJson('{"project": "JsonFormatStudio"}'));
 
 **Built for developers, by developers.** 🚀
 `;
+
+export const TOON_SAMPLE = `project: JsonFormatStudio
+version: 1.0.0
+description: Professional JSON Editor & Data Format Viewer
+
+features[9]{name,category}:
+  JSON Editor & Validator,Data Editing
+  YAML Parser & Viewer,Configuration
+  XML Parser & Formatter,Markup Language
+  CSV Data Viewer,Data Analysis
+  Markdown Renderer,Documentation
+  Syntax Highlighting,Core Feature
+  Tree View Visualization,Core Feature
+  Export to PDF/Image,Export
+  Privacy-First Design,Architecture
+
+settings:
+  theme: dark
+  fontSize: 14
+  autoSave: true
+  treeView: true
+  syntaxHighlighting: true
+
+developers[1]{name,role,focus}:
+  JsonFormatStudio Team,Full-Stack Development,Developer Tools
+
+keywords[5]: json editor,yaml viewer,xml parser,csv formatter,developer tools
+
+stats:
+  totalUsers: 1500
+  isActive: true
+  lastUpdate: null
+  rating: 4.8`;

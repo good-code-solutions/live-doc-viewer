@@ -4,7 +4,7 @@ import { Editor } from './components/Editor';
 import { Viewer } from './components/Viewer';
 import { Toolbar } from './components/Toolbar';
 import type { FileType } from './types';
-import { JSON_SAMPLE, YAML_SAMPLE, XML_SAMPLE, CSV_SAMPLE, MARKDOWN_SAMPLE } from './data/samples';
+import { JSON_SAMPLE, YAML_SAMPLE, XML_SAMPLE, CSV_SAMPLE, MARKDOWN_SAMPLE, TOON_SAMPLE } from './data/samples';
 import { jsonToToon } from './utils/toon';
 import { useNavigate, useLocation, Routes, Route } from 'react-router-dom';
 import { Toast } from './components/Toast';
@@ -15,7 +15,7 @@ type ContentMap = Record<FileType, string>;
 
 const DEFAULT_CONTENT: ContentMap = {
   json: JSON_SAMPLE,
-  toon: jsonToToon(JSON_SAMPLE),
+  toon: TOON_SAMPLE,
   yaml: YAML_SAMPLE,
   xml: XML_SAMPLE,
   csv: CSV_SAMPLE,

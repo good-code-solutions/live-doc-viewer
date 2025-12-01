@@ -2,6 +2,7 @@ import MonacoEditor from '@monaco-editor/react';
 import type { FileType } from '../types';
 import { Code, Copy, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { registerToonLanguage } from '../monaco/toonLanguage';
 
 interface EditorProps {
     code: string;
@@ -11,6 +12,16 @@ interface EditorProps {
 
 export function Editor({ code, setCode, fileType }: EditorProps) {
     const [copySuccess, setCopySuccess] = useState(false);
+    
+    const handleEditorDidMount = (editor: any, monaco: any) => {
+        // Always register TOON language when Monaco editor mounts (safe to call multiple times)
+        registerToonLanguage(monaco);
+        
+        // If TOON editor, force apply the theme
+        if (fileType === 'toon') {
+            monaco.editor.setTheme('toon-dark');
+        }
+    };
 
     const editorLabels: Record<FileType, string> = {
         json: 'JSON Editor',
@@ -74,9 +85,10 @@ export function Editor({ code, setCode, fileType }: EditorProps) {
                 <MonacoEditor
                     height="100%"
                     language={fileType === 'markdown' ? 'markdown' : fileType}
-                    theme="vs-dark"
+                    theme={fileType === 'toon' ? 'toon-dark' : 'vs-dark'}
                     value={code}
                     onChange={handleEditorChange}
+                    onMount={handleEditorDidMount}
                     options={{
                         minimap: { enabled: false },
                         fontSize: 14,
