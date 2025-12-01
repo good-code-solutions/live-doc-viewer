@@ -13,7 +13,7 @@ interface EditorProps {
 export function Editor({ code, setCode, fileType }: EditorProps) {
     const [copySuccess, setCopySuccess] = useState(false);
     
-    const handleEditorDidMount = (editor: any, monaco: any) => {
+    const handleEditorDidMount = (_editor: any, monaco: any) => {
         // Always register TOON language when Monaco editor mounts (safe to call multiple times)
         registerToonLanguage(monaco);
         

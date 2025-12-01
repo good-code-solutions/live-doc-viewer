@@ -5,7 +5,6 @@ import { Viewer } from './components/Viewer';
 import { Toolbar } from './components/Toolbar';
 import type { FileType } from './types';
 import { JSON_SAMPLE, YAML_SAMPLE, XML_SAMPLE, CSV_SAMPLE, MARKDOWN_SAMPLE, TOON_SAMPLE } from './data/samples';
-import { jsonToToon } from './utils/toon';
 import { useNavigate, useLocation, Routes, Route } from 'react-router-dom';
 import { Toast } from './components/Toast';
 
