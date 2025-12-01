@@ -4,6 +4,7 @@ import { YamlVisualizer } from './visualizers/YamlVisualizer';
 import { XmlVisualizer } from './visualizers/XmlVisualizer';
 import { CsvVisualizer } from './visualizers/CsvVisualizer';
 import { MarkdownVisualizer } from './visualizers/MarkdownVisualizer';
+import { ToonVisualizer } from './visualizers/ToonVisualizer';
 
 interface ViewerProps {
     code: string;
@@ -73,6 +74,12 @@ export function Viewer({ code, fileType, treeCollapsed, treeForceUpdate }: Viewe
                 return <CsvVisualizer code={code} />;
             case 'markdown':
                 return <MarkdownVisualizer code={code} />;
+            case 'toon':
+                return <ToonVisualizer
+                    code={code}
+                    treeCollapsed={treeCollapsed ?? 2}
+                    treeForceUpdate={treeForceUpdate ?? 0}
+                />;
             default:
                 return <div className="p-4 text-gray-400">Unsupported format</div>;
         }

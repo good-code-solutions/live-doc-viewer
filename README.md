@@ -8,6 +8,7 @@ JsonFormatStudio is a powerful, real-time data format editor and visualization t
 
 ### Multi-Format Support
 - **JSON Editor & Validator** - Advanced JSON editing with syntax highlighting, validation, and tree view
+- **TOON Editor & Viewer** - Compact, human-readable, schema-aware JSON for LLM prompts
 - **YAML Parser & Viewer** - Format and validate YAML documents with real-time error detection
 - **XML Parser & Formatter** - Parse, format and validate XML documents with structured visualization
 - **CSV Data Viewer** - View and format CSV data in organized tables with export options
@@ -59,7 +60,7 @@ npm run lint
 
 ## 🌐 SEO Keywords
 
-JSON editor, YAML viewer, XML parser, CSV formatter, JSON validator, JSON formatter, online JSON editor, data visualization, developer tools, code editor, JSON tree view, YAML parser, XML formatter, CSV viewer, markdown renderer
+JSON editor, YAML viewer, XML parser, CSV formatter, JSON validator, JSON formatter, online JSON editor, data visualization, developer tools, code editor, JSON tree view, YAML parser, XML formatter, CSV viewer, markdown renderer, TOON editor, TOON format
 
 ## 📄 License
 

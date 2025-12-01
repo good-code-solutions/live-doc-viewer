@@ -4,7 +4,17 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Professional JSON Editor, YAML Viewer, XML Parser & CSV Formatter - Multi-format data structure visualization tool for developers",
-  "keywords": ["json editor", "yaml viewer", "xml parser", "csv formatter", "data visualization", "json formatter", "json validator", "developer tools", "code editor"],
+  "keywords": [
+    "json editor",
+    "yaml viewer",
+    "xml parser",
+    "csv formatter",
+    "data visualization",
+    "json formatter",
+    "json validator",
+    "developer tools",
+    "code editor"
+  ],
   "author": "JsonFormatStudio",
   "homepage": "https://jsonformatstudio.com",
   "scripts": {
@@ -15,11 +25,13 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
+    "@toon-format/toon": "^2.0.1",
     "clsx": "^2.1.1",
     "fast-xml-parser": "^5.3.2",
     "framer-motion": "^12.23.24",
     "highlight.js": "^11.11.1",
     "html2canvas": "^1.4.1",
+    "js-tiktoken": "^1.0.21",
     "js-yaml": "^4.1.1",
     "jsonpath-plus": "^10.3.0",
     "jspdf": "^3.0.4",

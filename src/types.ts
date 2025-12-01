@@ -1,1 +1,1 @@
-export type FileType = 'json' | 'yaml' | 'xml' | 'csv' | 'markdown';
+export type FileType = 'json' | 'yaml' | 'xml' | 'csv' | 'markdown' | 'toon';

@@ -5,7 +5,9 @@ import { Viewer } from './components/Viewer';
 import { Toolbar } from './components/Toolbar';
 import type { FileType } from './types';
 import { JSON_SAMPLE, YAML_SAMPLE, XML_SAMPLE, CSV_SAMPLE, MARKDOWN_SAMPLE } from './data/samples';
+import { jsonToToon } from './utils/toon';
 import { useNavigate, useLocation, Routes, Route } from 'react-router-dom';
+import { Toast } from './components/Toast';
 
 const STORAGE_KEY = 'jsonformatstudio-content';
 
@@ -13,6 +15,7 @@ type ContentMap = Record<FileType, string>;
 
 const DEFAULT_CONTENT: ContentMap = {
   json: JSON_SAMPLE,
+  toon: jsonToToon(JSON_SAMPLE),
   yaml: YAML_SAMPLE,
   xml: XML_SAMPLE,
   csv: CSV_SAMPLE,
@@ -27,7 +30,7 @@ function DocViewer() {
 
   // Derive fileType from URL path (remove leading slash)
   const pathType = location.pathname.substring(1) as FileType;
-  const isValidType = ['json', 'yaml', 'xml', 'csv', 'markdown'].includes(pathType);
+  const isValidType = ['json', 'toon', 'yaml', 'xml', 'csv', 'markdown'].includes(pathType);
 
   const fileType = isValidType ? pathType : 'json';
 
@@ -35,20 +38,22 @@ function DocViewer() {
   useEffect(() => {
     const formatTitles: Record<FileType, string> = {
       json: 'JSON Editor - JsonFormatStudio | Format, Validate & Visualize JSON Data',
+      toon: 'TOON Editor - JsonFormatStudio | Token-Oriented Object Notation',
       yaml: 'YAML Viewer - JsonFormatStudio | Parse & Format YAML Documents',
       xml: 'XML Parser - JsonFormatStudio | Format & Validate XML Data',
       csv: 'CSV Formatter - JsonFormatStudio | View & Format CSV Data Tables',
       markdown: 'Markdown Renderer - JsonFormatStudio | Preview & Format Markdown'
     };
-    
+
     const formatDescriptions: Record<FileType, string> = {
       json: 'Professional online JSON editor with validation, formatting, and tree view. Format, validate and visualize JSON data instantly with syntax highlighting.',
+      toon: 'Online TOON editor and viewer. Compact, human-readable, schema-aware JSON for LLM prompts.',
       yaml: 'Online YAML viewer and parser. Format, validate and visualize YAML documents with syntax highlighting and error detection.',
       xml: 'Professional XML parser and formatter. Validate, format and visualize XML data with syntax highlighting and structure validation.',
       csv: 'CSV data viewer and formatter. View, format and analyze CSV data in organized tables with export capabilities.',
       markdown: 'Markdown renderer with GitHub-flavored markdown support. Preview and format Markdown documents with live rendering.'
     };
-    
+
     document.title = formatTitles[fileType];
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
@@ -74,6 +79,9 @@ function DocViewer() {
   const [treeCollapsed, setTreeCollapsed] = useState<boolean | number>(2);
   const [treeForceUpdate, setTreeForceUpdate] = useState(0);
 
+  // Toast state
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
   // Redirect if invalid type or root
   useEffect(() => {
     if (!isValidType) {
@@ -95,6 +103,17 @@ function DocViewer() {
     }));
   };
 
+  const updateContent = (type: FileType, content: string) => {
+    setContentMap(prev => ({
+      ...prev,
+      [type]: content,
+    }));
+  };
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+  };
+
   const setFileType = (newType: FileType) => {
     navigate(`/${newType}`);
   };
@@ -109,6 +128,8 @@ function DocViewer() {
         <Toolbar
           code={code}
           setCode={setCode}
+          updateContent={updateContent}
+          showToast={showToast}
           fileType={fileType}
           treeCollapsed={treeCollapsed}
           setTreeCollapsed={setTreeCollapsed}
@@ -134,6 +155,13 @@ function DocViewer() {
           </PanelGroup>
         </div>
       </div>
+
+      {toastMessage && (
+        <Toast
+          message={toastMessage}
+          onDismiss={() => setToastMessage(null)}
+        />
+      )}
     </div>
   );
 }

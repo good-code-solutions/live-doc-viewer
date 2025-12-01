@@ -32,6 +32,10 @@ export function About() {
                         <h2 className="text-2xl font-semibold mb-4">Professional Data Format Tools</h2>
                         <ul className="list-disc pl-6 space-y-2 text-gray-300 mb-8">
                             <li><strong>JSON Editor & Validator:</strong> Advanced JSON editing with syntax highlighting, validation, and tree view visualization.</li>
+                            <li className="mt-3 p-3 bg-purple-500/10 border border-purple-500/30 rounded-lg">
+                                <strong className="text-purple-300">🚀 TOON Conversion:</strong> <span className="text-gray-300">Convert JSON, YAML, or XML to Token-Oriented Object Notation (TOON) format - a compact, LLM-optimized format that can save up to 40% tokens. Perfect for AI applications and reducing API costs!</span>
+                            </li>
+                            <li><strong>TOON Editor & Viewer:</strong> Compact, human-readable, schema-aware JSON for LLM prompts.</li>
                             <li><strong>YAML Parser & Viewer:</strong> Format and validate YAML documents with real-time error detection.</li>
                             <li><strong>XML Parser & Formatter:</strong> Parse, format and validate XML documents with structured visualization.</li>
                             <li><strong>CSV Data Viewer:</strong> View and format CSV data in organized tables with export options.</li>

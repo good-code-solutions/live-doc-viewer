@@ -90,12 +90,12 @@ export function JsonVisualizer({ data, collapsed = 2, theme = 'monokai', forceUp
             <div className="flex-1 overflow-auto p-4">
                 <ReactJson
                     key={forceUpdate}
-                    src={result.success && result.count > 0 ? result.data : data}
+                    src={result.success && result.count > 0 && jsonPath !== '$' ? result.data : data}
                     theme={theme}
                     displayDataTypes={false}
                     enableClipboard={true}
                     collapsed={collapsed}
-                    name={result.success && result.count > 0 ? 'results' : 'root'}
+                    name={result.success && result.count > 0 && jsonPath !== '$' ? 'results' : 'root'}
                 />
             </div>
 

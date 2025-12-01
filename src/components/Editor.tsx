@@ -9,17 +9,26 @@ interface EditorProps {
 }
 
 export function Editor({ code, setCode, fileType }: EditorProps) {
+    const editorLabels: Record<FileType, string> = {
+        json: 'JSON Editor',
+        toon: 'TOON Editor',
+        yaml: 'YAML Editor',
+        xml: 'XML Editor',
+        csv: 'CSV Editor',
+        markdown: 'Markdown Editor'
+    };
+
     const handleEditorChange = (value: string | undefined) => {
         setCode(value || '');
     };
 
     return (
-        <div className="h-full w-full flex flex-col">
+        <div className="h-full w-full flex flex-col bg-gray-900">
             {/* Editor Header */}
             <div className="px-3 py-2 border-b border-gray-700 bg-gray-800">
                 <div className="flex items-center gap-2 text-xs font-semibold text-gray-300">
                     <Code size={14} className="text-gray-400" />
-                    <span>Editor</span>
+                    <span>{editorLabels[fileType]}</span>
                 </div>
             </div>
 

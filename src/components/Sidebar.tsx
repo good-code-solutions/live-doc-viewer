@@ -1,4 +1,4 @@
-import { Braces, FileCode, Code2, Table, FileText, Info, Mail } from 'lucide-react';
+import { Braces, FileCode, Code2, Table, FileText, Info, Mail, Scroll } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import type { FileType } from '../types';
 
@@ -9,6 +9,7 @@ interface SidebarProps {
 
 const formats = [
     { type: 'json' as FileType, icon: Braces, label: 'JSON' },
+    { type: 'toon' as FileType, icon: Scroll, label: 'TOON' },
     { type: 'yaml' as FileType, icon: FileCode, label: 'YAML' },
     { type: 'xml' as FileType, icon: Code2, label: 'XML' },
     { type: 'csv' as FileType, icon: Table, label: 'CSV' },
